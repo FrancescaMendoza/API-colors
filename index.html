@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>API Colors</title>
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css">
+    	<link rel="stylesheet" type="text/css" href="styles.css"> 
+	</head>
+	<body>
+	    <h1>Colores</h1>
+	    <div id="colorTable" class="container mt-3"><!--Los cuadros de color se generarán ordenados-->
+    	</div>
+	    <div class="container mt-3">
+	        <button class="btn btn-primary" id="prevPage">Anterior</button>
+	        <button class="btn btn-primary" id="nextPage">Siguiente</button>
+    	</div>
+	    <script>
+	        //URL de la API 
+	        var apiUrl = 'https://reqres.in/api/colors';
+
+	        var colorTable = document.getElementById("colorTable");
+	        var jsonData;
+	        var currentPage = 1;
+
+	        function renderColorPage(page) {
+	            colorTable.innerHTML = "";
+	            var colorsPerPage = 9;
+	            var startIndex = (page - 1) * colorsPerPage;
+	            var endIndex = startIndex + colorsPerPage;
+	            var colors = jsonData.data.slice(startIndex, endIndex);
+
+	            var colorContainer = document.createElement("div");
+	            colorContainer.className = "color-container";
+
+	            colors.forEach(function(color) {
+	                var colorBox = document.createElement("div");
+	                colorBox.className = "color-box card"; //card es la clase Bootstrap
+	                colorBox.style.backgroundColor = color.color;
+
+	                var colorInfo = `
+	                    Nombre: ${color.name}
+	                    Año: ${color.year}
+	                    Color: ${color.color}
+	                    Pantone: ${color.pantone_value}
+	                `;  
+
+	                //Agregamos la clase Bootstrap card-body
+	                colorBox.innerHTML = `
+	                    <div class="color-info card-body"> 
+	                        <p>${color.year}</p>
+	                        <p>${color.name}</p>
+	                        <p><strong>${color.color}</strong></p>
+	                        <p>${color.pantone_value}</p>
+	                    </div>
+	                `;
+
+	                //Agregamos el evento clic para copiar información al portapapeles
+	                colorBox.addEventListener("click", function() {
+	                    copyToClipboard(colorInfo);
+	                });
+
+	                colorContainer.appendChild(colorBox);
+	            });
+
+	            colorTable.appendChild(colorContainer);
+	        }
+
+	        function loadColors() {
+	            //Realizamos una solicitud GET a la API
+	            var xhr = new XMLHttpRequest();
+	            xhr.open('GET', apiUrl, true);
+	            xhr.onreadystatechange = function () {
+	                if (xhr.readyState === 4 && xhr.status === 200) {
+	                    jsonData = JSON.parse(xhr.responseText);
+	                    renderColorPage(currentPage);
+	                }
+	            };
+	            xhr.send();
+	        }
+
+	        //Función para copiar al portapapeles
+	        function copyToClipboard(text) {
+	            var textArea = document.createElement("textarea");
+	            textArea.value = text.replace(/^\s+/gm, ''); //Eliminar espacios innecesarios al inicio de cada línea copiada
+	            document.body.appendChild(textArea);
+	            textArea.select();
+	            document.execCommand("copy");
+	            document.body.removeChild(textArea);
+	            showAlert("¡Copiado!");
+	        }
+
+	        //Función para mostrar la alerta temporal centrada en pantalla
+	        function showAlert(message) {
+			    var alertDiv = document.createElement("div");
+			    alertDiv.className = "centered-alert";
+			    alertDiv.textContent = message;
+			    document.body.appendChild(alertDiv);
+			    setTimeout(function() {
+			        document.body.removeChild(alertDiv);
+			    }, 2500); //La alerta desaparece después de 2.5 segundos
+			}
+
+	        loadColors();
+
+	        //Botones "Anterior" y "Siguiente"
+	        document.getElementById("prevPage").addEventListener("click", function() {
+	            if (currentPage > 1) {
+	                currentPage--;
+	                renderColorPage(currentPage);
+	            }
+	        });
+
+	        document.getElementById("nextPage").addEventListener("click", function() {
+	            var totalPages = Math.ceil(jsonData.data.length / 9);
+	            if (currentPage < totalPages) {
+	                currentPage++;
+	                renderColorPage(currentPage);
+	            }
+	        });
+	    </script>
+	</body>
+</html>
+
+
