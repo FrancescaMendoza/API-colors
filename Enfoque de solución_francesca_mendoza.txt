@@ -1,0 +1,18 @@
+Enfoque de solución:
+
+La empresa en la que trabajo ha optado por estandarizar los colores que se usan en páginas, diseños, volantes y redes sociales.
+Este cambio conllevará a que se aprecie el orden y coordinación en todos estos; por ello es importante facilitarles a los colaboradores de la empresa un acceso dinámico a estos datos y ahorrarles tiempo.
+También, es importante mencionar que los colores son provenientes de una API propia de la empresa y pueden actualizarse en cualquier momento, lo cual hace que la API-colors sea la manera ideal de acceder a la información de estos.
+Para obtener la información de la API de la empresa se usó Javascript para luego colocarla en un listado de colores distribuido en diversas páginas. 
+Asimismo, se consiguió que aparezca la información de su año, nombre, color hexagesimal y valor pantone encima de una demostración del color.
+Además, la información de cada color se puede copiar con tan solo un clic en el color deseado.
+
+Para la construcción y futuro mantenimiento/actualizaciones de la aplicación se ha necesitado de HTML, CSS, Javascript, Bootstrap, Netifly y Github. 
+Se utilizó HTML para estructurar el contenido de la página web y definir encabezados, párrafos, etc. 
+CSS estuvo destinado a dar estilo a los elementos del HTML; por ello, en el archivo "styles.css" se establece el estilo (tamaño, color, alineación, ...) de los elementos de la página. Fue complementado con Bootstrap para un toque visual moderno.
+Se utilizó el lenguaje JavaScript para que la página sea interactiva y funcional. JavaScript permitió que la página pudiera captar los datos de la URL de la API de la empresa que establece los colores a utilizar, se utilizó para los botones de "Anterior" y "Siguiente", ayudó a la generación de los cuadros de colores e hizo posible que se copie al portapapeles la información de un cuadro de color al hacer clic en este.
+Además, Github es el ambiente donde se gestionará el proyecto y Netifly ha sido creado para un fácil acceso a la funcionalidad de este.
+
+Lo más laborioso fue recopilar la información de la API existente de la empresa para esta API.
+A pesar de que parecía un proceso rápido, idear cómo captar la respuesta JSON de la API existente y colocarla en cada cuadro de color de manera que la información estuviera ordenada fue retador y emocionante.
+Nunca había realizado un proceso similar y me alentó a investigar y probar mil y una formas para conseguir este resultado. 
